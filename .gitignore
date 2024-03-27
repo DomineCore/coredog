@@ -1,0 +1,5 @@
+_local_docs
+test_corefile/
+__debug_bin*
+local_config/*
+.vscode/*
