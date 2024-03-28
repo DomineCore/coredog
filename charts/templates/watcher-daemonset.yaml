@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: {{ include "coredog.fullname" . }}-watcher
+  labels:
+    {{- include "coredog.watcher.labels" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+      {{- include "coredog.watcher.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "coredog.watcher.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+      - name: watcher
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        imagePullPolicy: Always
+        volumeMounts:
+        - name: config-volume
+          mountPath: /etc/config
+        - name: {{ .Values.corefileVolume.name }}
+          mountPath: /corefile
+        args: ["./coredog","watcher"]
+        env:
+        - name: HOST_IP
+          valueFrom:
+            fieldRef:
+              fieldPath: status.hostIP
+        - name: CONTROLLER_PORT
+          value: "{{ .Values.controller.service.grpcPort }}"
+        - name: CONTROLLER_HOST
+          value: "{{ include "coredog.fullname" . }}-controller-grpc"
+        {{- with .Values.watcher.resources }}
+        resources:
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
+      volumes:
+        - name: config-volume
+          configMap:
+            name: {{ include "coredog.fullname" . }}
+        - name: {{ .Values.corefileVolume.name }}
+          {{- if eq .Values.corefileVolume.type "hostPath" }}
+          hostPath:
+            path: {{ .Values.corefileVolume.hostPath.path }}
+            type: {{ .Values.corefileVolume.hostPath.type }}
+          {{- else if eq .Values.corefileVolume.type "emptyDir" }}
+          emptyDir: {}
+          {{- else if eq .Values.corefileVolume.type "persistentVolumeClaim" }}
+          persistentVolumeClaim:
+            claimName: {{ .Values.corefileVolume.persistentVolumeClaim.claimName }}
+          {{- end }}

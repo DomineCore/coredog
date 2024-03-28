@@ -15,7 +15,6 @@ var (
 )
 
 type Config struct {
-	ScrapePaths   []string `yaml:"ScrapePaths"`
 	StorageConfig struct {
 		Enabled bool `yaml:"enabled" env-default:"true"`
 		// default storage protocol: s3

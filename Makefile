@@ -17,6 +17,8 @@ push: build
 .PHONY: update-chart
 update-chart:
 	sed -i 's/image.tag: .*/image.tag: $(VERSION)/' chart/values.yaml
+	yq e -i '.version = "$(VERSION)"' chart/Chart.yaml
+	yq e -i '.appVersion = "$(VERSION)"' chart/Chart.yaml
 
 .PHONY: push-chart
 push-chart: update-chart

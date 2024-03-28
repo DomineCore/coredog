@@ -3,3 +3,4 @@ test_corefile/
 __debug_bin*
 local_config/*
 .vscode/*
+charts/values-local.yaml
