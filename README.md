@@ -11,6 +11,7 @@ Coredog is an open-source project designed to monitor and manage core dumps in a
 5. [Deployment](#deployment)
 6. [Usage](#usage)
 7. [License](#license)
+8. [Contributors](#Contributors)
 
 ## Features
 
@@ -93,3 +94,9 @@ Once Coredog is deployed, it will automatically monitor the Kubernetes cluster f
 ## License
 
 Coredog is licensed under the [MIT License](LICENSE).
+
+## Contributors
+
+<a href="https://github.com/eryajf/learn-github/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=eryajf/learn-github" />
+</a>
