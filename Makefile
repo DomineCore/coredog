@@ -13,14 +13,3 @@ build:
 .PHONY: push
 push: build
 	docker push $(DOCKER_REPO)/$(IMAGE_NAME):$(VERSION)
-
-.PHONY: update-chart
-update-chart:
-	sed -i 's/image.tag: .*/image.tag: $(VERSION)/' charts/values.yaml
-	yq e -i '.version = "$(VERSION)"' charts/Chart.yaml
-	yq e -i '.appVersion = "$(VERSION)"' charts/Chart.yaml
-
-.PHONY: push-chart
-push-chart: update-chart
-	helm package charts
-	helm push charts/ $(DOCKER_REPO)
