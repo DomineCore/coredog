@@ -7,7 +7,6 @@ image:
 
 config:
   watcher.yaml: |-
-    ScrapePaths: ["/core/dump"]
     StorageConfig:
       enabled: true
       protocol: s3
