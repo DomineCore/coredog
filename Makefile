@@ -16,11 +16,11 @@ push: build
 
 .PHONY: update-chart
 update-chart:
-	sed -i 's/image.tag: .*/image.tag: $(VERSION)/' chart/values.yaml
-	yq e -i '.version = "$(VERSION)"' chart/Chart.yaml
-	yq e -i '.appVersion = "$(VERSION)"' chart/Chart.yaml
+	sed -i 's/image.tag: .*/image.tag: $(VERSION)/' chartsvalues.yaml
+	yq e -i '.version = "$(VERSION)"' chartsChart.yaml
+	yq e -i '.appVersion = "$(VERSION)"' chartsChart.yaml
 
 .PHONY: push-chart
 push-chart: update-chart
 	helm package chart
-	helm push chart/ $(DOCKER_REPO)
+	helm push charts $(DOCKER_REPO)
