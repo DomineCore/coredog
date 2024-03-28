@@ -22,5 +22,5 @@ update-chart:
 
 .PHONY: push-chart
 push-chart: update-chart
-	helm package chart
+	helm package charts
 	helm push charts/ $(DOCKER_REPO)

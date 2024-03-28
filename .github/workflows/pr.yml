@@ -1,0 +1,62 @@
+name: Pull Request
+
+on:
+  pull_request:
+    types:
+      - opened
+      - edited
+      - reopened
+      - synchronize
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Set up Go
+      uses: actions/setup-go@v2
+      with:
+        go-version: 1.21.5
+
+    - name: Install dependencies
+      run: go mod download
+
+    - name: Lint
+      run: go vet ./...
+
+  commit-msg:
+    name: Commit Message Lint
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Install commitlint
+      run: npm install -g @commitlint/cli @commitlint/config-conventional
+
+    - name: Lint commit messages
+      run: |
+        echo "::group::Linting commit messages"
+        npx commitlint --from=$(git merge-base HEAD origin/main) --to=HEAD
+        echo "::endgroup::"
+
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Set up Go
+      uses: actions/setup-go@v2
+      with:
+        go-version: 1.21.5
+
+    - name: Install dependencies
+      run: go mod download
+
+    - name: Test
+      run: go test ./...
