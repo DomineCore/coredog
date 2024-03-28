@@ -98,4 +98,21 @@ Coredog is licensed under the [MIT License](LICENSE).
 ## Contributors
 
 <!-- readme: collaborators,contributors -start -->
+<table>
+<tr>
+    <td align="center">
+        <a href="https://github.com/DomineCore">
+            <img src="https://avatars.githubusercontent.com/u/50765823?v=4" width="100;" alt="DomineCore"/>
+            <br />
+            <sub><b>Core</b></sub>
+        </a>
+    </td>
+    <td align="center">
+        <a href="https://github.com/levvli">
+            <img src="https://avatars.githubusercontent.com/u/95063138?v=4" width="100;" alt="levvli"/>
+            <br />
+            <sub><b>levvli</b></sub>
+        </a>
+    </td></tr>
+</table>
 <!-- readme: collaborators,contributors -end -->
