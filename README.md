@@ -111,7 +111,7 @@ Coredog is licensed under the [MIT License](LICENSE).
         <a href="https://github.com/levvli">
             <img src="https://avatars.githubusercontent.com/u/95063138?v=4" width="100;" alt="levvli"/>
             <br />
-            <sub><b>levvli</b></sub>
+            <sub><b>Levvli</b></sub>
         </a>
     </td></tr>
 </table>
