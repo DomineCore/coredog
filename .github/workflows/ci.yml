@@ -27,12 +27,9 @@ jobs:
         password: ${{ secrets.DOCKERHUB_TOKEN }}
 
     - name: Build and push Docker image
-      id: build-image
-      uses: docker/build-push-action@v2
-      with:
-        context: .
-        push: true
-        tags: user/repo:${{ github.ref_name }}
+      run: |
+        make build
+        make push
 
     - name: Update image tag in values.yaml
       run: |
