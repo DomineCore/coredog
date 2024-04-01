@@ -3,7 +3,7 @@ nameOverride: coredog
 
 image:
   repository: coderflyfyf/coredog
-  tag: v0.0.1
+  tag: v0.0.3.rc
 
 config:
   watcher.yaml: |-
