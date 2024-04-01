@@ -136,7 +136,7 @@ func isFileWriteComplete(filePath string) (ok bool, err error) {
 		// get file size
 		initialSize := fileInfo.Size()
 
-		time.Sleep(1 * time.Second)
+		time.Sleep(5 * time.Second)
 
 		// get file size again
 		fileInfo, err = os.Stat(filePath)
