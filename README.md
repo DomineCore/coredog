@@ -4,14 +4,20 @@ Coredog is an open-source project designed to monitor and manage core dumps in a
 
 ## Table of Contents
 
-1. [Features](#features)
-2. [Prerequisites](#prerequisites)
-3. [Getting Started](#getting-started)
-4. [Configuration](#configuration)
-5. [Deployment](#deployment)
-6. [Usage](#usage)
-7. [License](#license)
-8. [Contributors](#Contributors)
+1. [Architecture](#architecture)
+2. [Features](#features)
+3. [Prerequisites](#prerequisites)
+4. [Getting Started](#getting-started)
+5. [Configuration](#configuration)
+6. [Deployment](#deployment)
+7. [Usage](#usage)
+8. [License](#license)
+9. [Contributors](#Contributors)
+
+## Architecture
+
+![Coredog Architecture](./artich.png)
+The above diagram represents the high-level architecture of Coredog. It showcases the key components and their interactions.
 
 ## Features
 
