@@ -86,10 +86,7 @@ func (fw *FileWatcher) watchEvents() {
 						fw.watch.Add(ev.Name)
 						logrus.Infof("new subdir created,start to watch it:%s", ev.Name)
 					}
-				}
-
-				if ev.Op&fsnotify.Write == fsnotify.Write {
-					_, err := isFileWriteComplete(ev.Name)
+					_, err = isFileWriteComplete(ev.Name)
 					if err != nil {
 						logrus.Errorf("file write")
 					}
@@ -136,7 +133,7 @@ func isFileWriteComplete(filePath string) (ok bool, err error) {
 		// get file size
 		initialSize := fileInfo.Size()
 
-		time.Sleep(5 * time.Second)
+		time.Sleep(1 * time.Second)
 
 		// get file size again
 		fileInfo, err = os.Stat(filePath)
