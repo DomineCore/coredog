@@ -56,6 +56,14 @@ func WatchCorefile() {
 					logrus.Errorf("pub a corefile error:%v", err)
 				}
 			}()
+			go func() {
+				if cfg.StorageConfig.DeleteLocalCorefile {
+					err := os.Remove(corefilePath)
+					if err != nil {
+						logrus.Errorf("delete corefile error: %v", err)
+					}
+				}
+			}()
 		default:
 			continue
 		}

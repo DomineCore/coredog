@@ -27,6 +27,7 @@ type Config struct {
 		StoreDir          string `yaml:"StoreDir"`
 		// presigned url expire time(by seconds)
 		PresignedURLExpireSeconds int `yaml:"PresignedURLExpireSeconds"`
+		DeleteLocalCorefile	bool `yaml:"deleteLocalCorefile"`
 	} `yaml:"StorageConfig"`
 }
 
