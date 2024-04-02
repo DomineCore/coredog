@@ -17,6 +17,7 @@ config:
       S3Endpoint: "endpoint"
       StoreDir: corefiles
       PresignedURLExpireSeconds: 3600
+      DeleteLocalCorefile: true
 
   controller.yaml: |-
     NoticeChannel:
