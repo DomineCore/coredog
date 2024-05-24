@@ -4,7 +4,6 @@ import (
 	"bufio"
 	"context"
 	"fmt"
-	coredogwatcher "github.com/DomineCore/coredog/coredog-watcher"
 	"os"
 	"path/filepath"
 	"time"
@@ -49,11 +48,13 @@ func (ss *S3Store) Upload(ctx context.Context, path string) (downloadurl string,
 		u.LeavePartsOnError = true
 		u.Concurrency = 3
 	})
+	gc := os.Getenv("GC")
+	gc_type := os.Getenv("GC_TYPE")
 	if err != nil {
 		return
-	} else if coredogwatcher.GetCfg().Gc && (coredogwatcher.GetCfg().GcType == "rm") {
+	} else if gc == "true" && gc_type == "rm" {
 		_ = os.Remove(path)
-	} else if coredogwatcher.GetCfg().Gc && (coredogwatcher.GetCfg().GcType == "truncate") {
+	} else if gc == "true" && gc_type == "truncate" {
 		file, err := os.Open(path)
 		defer file.Close()
 		if err != nil {
