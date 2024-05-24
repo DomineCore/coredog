@@ -63,6 +63,27 @@ app.role: watcher
 {{- end }}
 
 {{/*
+controller Selector labels
+*/}}
+{{- define "coredog.controller.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "coredog.name" . }}
+app.kubernetes.io/instance: {{ .Release.Name }}
+app.role: controller
+{{- end }}
+
+{{/*
+controller labels
+*/}}
+{{- define "coredog.controller.labels" -}}
+helm.sh/chart: {{ include "coredog.chart" . }}
+app.kubernetes.io/name: {{ include "coredog.name" . }}
+app.kubernetes.io/instance: {{ .Release.Name }}
+app.kubernetes.io/version: {{ .Chart.AppVersion }}
+app.kubernetes.io/managed-by: {{ .Release.Service }}
+app.role: controller
+{{- end }}
+
+{{/*
 Custom template function to convert a string to lowercase
 */}}
 {{- define "coredog.tolower" -}}
