@@ -29,25 +29,9 @@ type Config struct {
 		PresignedURLExpireSeconds int  `yaml:"PresignedURLExpireSeconds"`
 		DeleteLocalCorefile       bool `yaml:"deleteLocalCorefile"`
 	} `yaml:"StorageConfig"`
-	Gc     bool   `yaml:"gc" env-default:"false"`
-	GcType string `yaml:"gc_type" env-default:"rm"`
 }
 
 func getCfg() *Config {
-	onceCfg.Do(func() {
-		cfg = &Config{}
-		cfgPath := os.Getenv("CONFIG_WATCHER_PATH")
-		if cfgPath == "" {
-			cfgPath = DEFAULT_CFG_PATH
-		}
-		if err := cleanenv.ReadConfig(cfgPath, cfg); err != nil {
-			log.Fatal(err)
-		}
-	})
-	return cfg
-}
-
-func GetCfg() *Config {
 	onceCfg.Do(func() {
 		cfg = &Config{}
 		cfgPath := os.Getenv("CONFIG_WATCHER_PATH")
