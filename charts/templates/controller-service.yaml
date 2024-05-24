@@ -3,10 +3,10 @@ kind: Service
 metadata:
   name: {{ include "coredog.fullname" . }}-controller-grpc
   labels:
-    {{- include "coredog.labels" . | nindent 4 }}
+    {{- include "coredog.controller.labels" . | nindent 4 }}
 spec:
   selector:
-    {{- include "coredog.selectorLabels" . | nindent 4 }}
+    {{- include "coredog.controller.selectorLabels" . | nindent 4 }}
   ports:
     - name: grpc
       port: 8443

@@ -3,16 +3,16 @@ kind: Deployment
 metadata:
   name: {{ include "coredog.fullname" . }}-controller
   labels:
-    {{- include "coredog.labels" . | nindent 4 }}
+    {{- include "coredog.controller.labels" . | nindent 4 }}
 spec:
   replicas: 1
   selector:
     matchLabels:
-      {{- include "coredog.selectorLabels" . | nindent 6 }}
+      {{- include "coredog.controller.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       labels:
-        {{- include "coredog.selectorLabels" . | nindent 8 }}
+        {{- include "coredog.controller.selectorLabels" . | nindent 8 }}
     spec:
       containers:
         - name: {{ .Chart.Name }}
