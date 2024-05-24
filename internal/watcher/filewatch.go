@@ -6,6 +6,8 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"runtime"
+	"syscall"
 	"time"
 
 	"github.com/fsnotify/fsnotify"
@@ -44,6 +46,39 @@ func isDir(path string) bool {
 	}
 	return s.IsDir()
 
+}
+
+func (fw *FileWatcher) NFSWatch(dir string) error {
+	for {
+		go func() {
+			ok, err := pathExist(dir)
+			if err != nil {
+
+			}
+			if !ok {
+
+			}
+			if isDir(dir) {
+				filepath.Walk(dir, func(path string, info os.FileInfo, err error) error {
+					var creationTime time.Time
+					fileInfo, _ := os.Stat(path)
+					// 获取文件的创建日期
+					switch runtime.GOOS {
+					case "linux":
+						creationTimeSpec := fileInfo.Sys().(*syscall.Stat_t).Ctim
+						creationTime = time.Unix(int64(creationTimeSpec.Sec), int64(creationTimeSpec.Nsec))
+					case "windows":
+						creationTime = fileInfo.ModTime()
+					}
+					if time.Now().After(creationTime.Add(-1*time.Minute)) && time.Now().Before(creationTime) {
+						fw.watch.Events <- fileInfo.Name()
+					}
+					return nil
+				})
+			}
+			go fw.watchEvents()
+		}()
+	}
 }
 
 func (fw *FileWatcher) Watch(dir string) error {
