@@ -1,7 +1,7 @@
 package store
 
 import (
-	"bufio"
+	"os"
 	"context"
 	"path/filepath"
 	"time"
