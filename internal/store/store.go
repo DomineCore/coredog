@@ -3,8 +3,6 @@ package store
 import (
 	"bufio"
 	"context"
-	"fmt"
-	"os"
 	"path/filepath"
 	"time"
 
@@ -48,8 +46,6 @@ func (ss *S3Store) Upload(ctx context.Context, path string) (downloadurl string,
 		u.LeavePartsOnError = true
 		u.Concurrency = 3
 	})
-	gc := os.Getenv("GC")
-	gc_type := os.Getenv("GC_TYPE")
 	if err != nil {
 		return
 	}
