@@ -20,6 +20,27 @@ type Config struct {
 		Chan       string `yaml:"chan"`
 		Webhookurl string `yaml:"webhookurl"`
 	} `yaml:"NoticeChannel"`
+	// example
+	// support to reference to labels and corefile's name parameters
+	// example
+	// cluster: {label.cluster}
+	// inner variable: {corefile.filename}
+	MessageTemplate string `yaml:"messageTemplate"`
+	// example
+	// example
+	// cluster: cluster-a
+	// env: sigapore
+	MessageLabels map[string]string `yaml:"messageLabels"`
+	// if set can use inner variable yet. such as:
+	// pid：{corefile.p}
+	// uid：{corefile.u}
+	// gid：{corefile.g}
+	// signal: {corefile.s}
+	// timestamp: {corefile.t}
+	// host(pod): {corefile.h}
+	// exe name: {corefile.e}
+	// exe path: {corefile.E}
+	// CorePattern string `yaml:"core_pattern"`
 }
 
 func getCfg() *Config {
