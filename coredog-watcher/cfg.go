@@ -26,9 +26,11 @@ type Config struct {
 		S3Endpoint        string `yaml:"S3Endpoint"`
 		StoreDir          string `yaml:"StoreDir"`
 		// presigned url expire time(by seconds)
-		PresignedURLExpireSeconds int `yaml:"PresignedURLExpireSeconds"`
-		DeleteLocalCorefile	bool `yaml:"deleteLocalCorefile"`
+		PresignedURLExpireSeconds int  `yaml:"PresignedURLExpireSeconds"`
+		DeleteLocalCorefile       bool `yaml:"deleteLocalCorefile"`
 	} `yaml:"StorageConfig"`
+	Gc     bool   `yaml:"gc" env-default:"false"`
+	GcType string `yaml:"gc_type" env-default:"rm"`
 }
 
 func getCfg() *Config {
