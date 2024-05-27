@@ -2,6 +2,7 @@ package coredogcontroller
 
 import (
 	"context"
+	"fmt"
 	"path/filepath"
 	"strings"
 
@@ -37,7 +38,7 @@ func buildMessage(template string, corefilename string, labels map[string]string
 	// 1 replace the labels into template
 	msg := template
 	for key, val := range labels {
-		msg = strings.ReplaceAll(msg, key, val)
+		msg = strings.ReplaceAll(msg, fmt.Sprintf("{%v}", key), val)
 	}
 	msg = strings.ReplaceAll(msg, CorefileName, corefilename)
 	msg = strings.ReplaceAll(msg, CorefileUrl, url)
