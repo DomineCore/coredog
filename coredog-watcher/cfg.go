@@ -29,6 +29,8 @@ type Config struct {
 		PresignedURLExpireSeconds int  `yaml:"PresignedURLExpireSeconds"`
 		DeleteLocalCorefile       bool `yaml:"deleteLocalCorefile"`
 	} `yaml:"StorageConfig"`
+	Gc     bool   `yaml:"gc" env-default:"false"`
+	GcType string `yaml:"gc_type" env-default:"rm"`
 }
 
 func getCfg() *Config {
