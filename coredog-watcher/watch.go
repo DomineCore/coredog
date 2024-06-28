@@ -69,8 +69,6 @@ func WatchCorefile() {
 					}
 				}
 			}()
-		default:
-			continue
 		}
 	}
 }
