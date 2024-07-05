@@ -18,8 +18,8 @@ func (s *CorefileService) Sub(ctx context.Context, r *pb.Corefile) (*pb.Corefile
 	logrus.Infof("recevier a newfile:%s from host:%s", r.Filepath, r.Ip)
 	cfg = getCfg()
 	for _, noticeChan := range cfg.NoticeChannel {
-		_, corefilename := filepath.Split(r.Filepath)
-		msg := buildMessage(cfg.MessageTemplate, corefilename, cfg.MessageLabels, r.Url)
+		corefilePath, corefilename := filepath.Split(r.Filepath)
+		msg := buildMessage(cfg.MessageTemplate, corefilePath, corefilename, cfg.MessageLabels, r.Url)
 		if noticeChan.Chan == "wechat" {
 			c := notice.NewWechatWebhookMsg(noticeChan.Webhookurl)
 			c.Notice(msg)
@@ -34,12 +34,13 @@ func (s *CorefileService) Sub(ctx context.Context, r *pb.Corefile) (*pb.Corefile
 	return &pb.Corefile{}, nil
 }
 
-func buildMessage(template string, corefilename string, labels map[string]string, url string) string {
+func buildMessage(template string, corefilePath, corefilename string, labels map[string]string, url string) string {
 	// 1 replace the labels into template
 	msg := template
 	for key, val := range labels {
 		msg = strings.ReplaceAll(msg, fmt.Sprintf("{%v}", key), val)
 	}
+	msg = strings.ReplaceAll(msg, CorefilePath, corefilePath)
 	msg = strings.ReplaceAll(msg, CorefileName, corefilename)
 	msg = strings.ReplaceAll(msg, CorefileUrl, url)
 	return msg

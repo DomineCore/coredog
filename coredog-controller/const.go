@@ -13,5 +13,6 @@ const (
 
 const (
 	CorefileName = "{corefile.filename}"
+	CorefilePath = "{corefile.path}"
 	CorefileUrl  = "{corefile.url}"
 )
