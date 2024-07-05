@@ -2,16 +2,14 @@ package coredogwatcher
 
 import (
 	"context"
+	"log"
 	"os"
 
 	"github.com/DomineCore/coredog/internal/store"
 	"github.com/DomineCore/coredog/internal/watcher"
 	"github.com/DomineCore/coredog/pb"
+	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
-)
-
-const (
-	COREFILE_DIR = "/corefile"
 )
 
 func getHostip() string {
@@ -22,8 +20,10 @@ func WatchCorefile() {
 	cfg = getCfg()
 	recevier := make(chan string)
 	w := watcher.NewFileWatcher(recevier)
-	w.Watch(COREFILE_DIR)
-
+	err := w.Watch(cfg.COREFILE_DIR)
+	if err != nil {
+		log.Fatal(errors.Wrap(err, "start watch error"))
+	}
 	s, err := store.NewS3Store(
 		cfg.StorageConfig.S3Region,
 		cfg.StorageConfig.S3AccessKeyID,
