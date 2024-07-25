@@ -82,17 +82,22 @@ func (fw *FileWatcher) watchEvents() {
 			{
 				if ev.Op&fsnotify.Create == fsnotify.Create {
 					file, err := os.Stat(ev.Name)
-					if err == nil && file.IsDir() {
-						fw.watch.Add(ev.Name)
-						logrus.Infof("new subdir created,start to watch it:%s", ev.Name)
-					}
-					_, err = isFileWriteComplete(ev.Name)
 					if err != nil {
-						logrus.Errorf("file write")
+						logrus.Errorf("received a create event from fsnotify,but os.stat error:%s", err.Error())
+					} else {
+						if file.IsDir() {
+							fw.watch.Add(ev.Name)
+							logrus.Infof("new subdir created,start to watch it:%s", ev.Name)
+						} else {
+							_, err = isFileWriteComplete(ev.Name)
+							if err != nil {
+								logrus.Errorf("file write")
+							}
+							logrus.Infof("capture a file:%s", ev.Name)
+							// send file to receiver channel
+							fw.receiver <- ev.Name
+						}
 					}
-					logrus.Infof("capture a file:%s", ev.Name)
-					// send file to receiver channel
-					fw.receiver <- ev.Name
 				}
 
 				if ev.Op&fsnotify.Remove == fsnotify.Remove {
