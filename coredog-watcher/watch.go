@@ -44,7 +44,9 @@ func WatchCorefile() {
 			url, err := s.Upload(context.Background(), corefilePath)
 			if err != nil {
 				logrus.Errorf("store a corefile error:%v", err)
-			} else if cfg.Gc && (cfg.GcType == "rm") {
+				return
+			}
+			if cfg.Gc && (cfg.GcType == "rm") {
 				_ = os.Remove(corefilePath)
 			} else if cfg.Gc && (cfg.GcType == "truncate") {
 				_ = os.Truncate(corefilePath, 0)
@@ -59,14 +61,6 @@ func WatchCorefile() {
 				})
 				if err != nil {
 					logrus.Errorf("pub a corefile error:%v", err)
-				}
-			}()
-			go func() {
-				if cfg.StorageConfig.DeleteLocalCorefile {
-					err := os.Remove(corefilePath)
-					if err != nil {
-						logrus.Errorf("delete corefile error: %v", err)
-					}
 				}
 			}()
 		}
